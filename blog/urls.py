@@ -3,9 +3,10 @@ from django.urls import path
 from django.conf import settings
 from django.conf.urls.static import static
 urlpatterns = [
-    path('', BookQueryListView.as_view(), name=''),
-    path('booksearch/', Book_Search.as_view(), name=''),
-    path('booksingle/<int:pk>/', Book_Single.as_view(), name=''),
+    path('',NewsQueryListView.as_view(), name=''),
+    path('news_search/', News_Search.as_view(), name=''),
+    path('course_list/', CourseListView.as_view(), name=''),
+    path('news_single/<int:pk>/', News_Single.as_view(), name=''),
 
 
 ]
