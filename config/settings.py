@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'exclusivebooleanfield',
     'rest_framework',
     'django_filters',
+    'telegram_error_notifications.apps.TelegramErrorNotificationsConfig'
 
     'blog',
 
@@ -54,6 +55,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+
 ]
 
 
@@ -65,6 +67,19 @@ REST_FRAMEWORK = {
     ],
 
 }
+import sentry_sdk
+
+sentry_sdk.init(
+    dsn="https://35c59093bf5fb2b4e2611d8215f76a3b@o4506380789678080.ingest.sentry.io/4506380791316480",
+    # Set traces_sample_rate to 1.0 to capture 100%
+    # of transactions for performance monitoring.
+    traces_sample_rate=1.0,
+    # Set profiles_sample_rate to 1.0 to profile 100%
+    # of sampled transactions.
+    # We recommend adjusting this value in production.
+    profiles_sample_rate=1.0,
+)
+TELEGRAM_ERROR_LOG_URL = "https://api.telegram.org/bot6192191641:AAGfWZQF5A6MiSJluYLSvarDKbm-s8rhyX4/sendMessage?chat_id=<CHAT_ID>&text="
 
 
 ROOT_URLCONF = "config.urls"

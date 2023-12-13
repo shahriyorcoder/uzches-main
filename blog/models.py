@@ -19,7 +19,6 @@ class News(models.Model):
          super(News, self).save(*args, **kwargs)
 
 
-# Course
 class Category(models.Model):
     title = models.CharField(max_length=250)
     course_count = models.IntegerField(default=0)
@@ -31,11 +30,11 @@ LANG = (
 
 ) 
 LEVEL = ( 
-    ("Low", "Low"), 
-    ("Middle", "Middle"), 
+    ("Low", "Low"),
+    ("Middle", "Middle"),
     ("High", "High"),
-
 )
+
 class Course(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     is_saved = models.ForeignKey(User, on_delete=models.CASCADE,related_name='course_is_saved')
@@ -44,7 +43,7 @@ class Course(models.Model):
     title = models.CharField(max_length=250)
     author = models.CharField(max_length=250)
     preview = models.ImageField(upload_to='preview/')
-    
+
     is_free = ExclusiveBooleanField(default=False,on=('is_saved'))
     has_discount = models.BooleanField()
     original_price = models.IntegerField(default=0)
@@ -59,7 +58,7 @@ class Course(models.Model):
 
 class Comment(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    course = models.ForeignKey(Course,on_delete=models.CASCADE)
+    course = models.ForeignKey(Course,on_delete=models.CASCADE,related_name='comment')
     rating = models.IntegerField()
     content = models.TextField()
     def __str__(self):
@@ -73,7 +72,7 @@ class Module(models.Model):
 
 
 class Lesson(models.Model):
-    module = models.ForeignKey(Module,on_delete=models.CASCADE)
+    module = models.ForeignKey(Course,on_delete=models.CASCADE,related_name='lessons')
     is_watched = models.ForeignKey(User,on_delete=models.CASCADE)
     bookmark = models.ForeignKey(User,on_delete=models.CASCADE, related_name='bookmark')
     title = models.CharField(max_length=250)
